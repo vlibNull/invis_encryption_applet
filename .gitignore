@@ -1,0 +1,29 @@
+# Virtual environment
+encryption_venv/
+*.venv/
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Logs / temporary files
+*.log
+*.tmp
+*.bak
+
+# IDE / editor files
+.vscode/
+*.sublime-project
+*.sublime-workspace
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Requirements marker file
+encryption_venv/.requirements_installed
+
+# sensitive keys directory (prevent accidental keys upload)
+.keys/

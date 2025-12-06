@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+VENV_DIR="encryption_venv"
+REQ_FILE="requirements.txt"
+REQ_MARKER="$VENV_DIR/.requirements_installed"
+DOT_KEYS_DIR="DOTkeys"
+KEYS_DIR=".keys"
+
+# Move DOTkeys/ to .keys/ if .keys/ doesn't already exist
+if [ -d "$DOT_KEYS_DIR" ] && [ ! -d "$KEYS_DIR" ]; then
+    echo "Renaming $DOT_KEYS_DIR to $KEYS_DIR..."
+    mv "$DOT_KEYS_DIR" "$KEYS_DIR"
+elif [ -d "$KEYS_DIR" ]; then
+    echo "$KEYS_DIR already exists, skipping DOTkeys rename."
+fi
+
+# Check if the virtual environment exists
+if [ ! -d "$VENV_DIR" ]; then
+    echo "Creating virtual environment in $VENV_DIR..."
+    python -m venv "$VENV_DIR"
+fi
+
+# Activate the virtual environment
+# shellcheck disable=SC1091
+source "$VENV_DIR/bin/activate"
+
+# Upgrade pip if needed
+# pip install --upgrade pip
+
+# Install requirements if not already installed
+if [ ! -f "$REQ_MARKER" ]; then
+    echo "Installing requirements from $REQ_FILE..."
+    pip install -r "$REQ_FILE"
+    touch "$REQ_MARKER"
+else
+    echo "Requirements already installed, skipping..."
+fi
+
+# Run the main script
+python src/main.py
