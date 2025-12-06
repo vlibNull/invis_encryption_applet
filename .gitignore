@@ -27,3 +27,6 @@ encryption_venv/.requirements_installed
 
 # sensitive keys directory (prevent accidental keys upload)
 .keys/
+
+# ignore my personal runner script:
+run_me
